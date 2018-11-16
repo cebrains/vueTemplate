@@ -10,7 +10,7 @@ let service = axios.create({
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么，比如说加头部验证
-  /*config.headers['authorization'] = 'RXTHINKING@@@@eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1Mzk5MTQxNjQsImlhdCI6MTUzOTgyNzc2NCwiaXNzIjoia2VuIiwiZGF0YSI6eyJ1c2VybmFtZSI6InN1bmppbmd3ZW4iLCJyb2xlIjoiYWRtaW4iLCJsb2dpbl90aW1lIjoxNTM5ODI3NzY0fX0.TgiNN4lQVal0n4HYUN7r2LRSa_d_smmpsSNSdxx7aCE';*/
+  config.headers['authorization'] = 'RXTHINKING@@@@eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9'
   //显示loading
   showLoadingFn();
   return config;
@@ -90,13 +90,13 @@ export function allAjax(...params) {
           break;
         case 'post':
           method = 'post';
-          console.log(11)
           break;
         default:
           console.error(`请求方法${val.method.toLowerCase()}没定义，请先定义再调用！`)
           break;
       }
       return `${method}Ajax(${val.url}, ${val.data})`
+      // return method+'Ajax('+val.url+','+val.data+')';
     } else {
       return getAjax(val.url, val.data)
     }

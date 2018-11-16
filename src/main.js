@@ -7,6 +7,7 @@ import promise from 'es6-promise'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import * as fetch from '@/render/js/fetch'
+import * as custom from '@/render/js/filters'
 import config from '@/render/js/config'
 
 // 兼容 Promise
@@ -19,25 +20,12 @@ Vue.config.productionTip = false
 Vue.prototype.$fetch = fetch;
 Vue.prototype.$config = config;
 
+//加入全局过滤器
+Object.keys(custom).forEach(val => Vue.filter(val, custom[val]))
+
+
 new Vue({
   router,
   components: { App },
   template: '<App/>'
 }).$mount('#app')
-
-router.beforeEach((to, from, next) => {
-  console.log(to)
-  if (to.matched.some(record => record.meta.requireAuth)) {
-    let userId = sessionStorage.getItem("userId");
-    if (!userId) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
-  } else {
-    next() // 确保一定要调用 next()
-  }
-})
